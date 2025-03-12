@@ -58,8 +58,10 @@ void execCommand(char* command){
 
     if (id == 0){
 
+        signal(SIGINT, SIG_DFL); // allow CTRL+C
+
         int result = execvp(args[0], args);
-            
+
         if(result == -1){
             fprintf(stderr, "\'%s\' command not found\n", args[0]);
             exit(1); // close fork
@@ -76,7 +78,9 @@ void execCommand(char* command){
 
 int main(void){
 
-    while (1){ // MAIN LOOP
+    signal(SIGINT, SIG_IGN); // ignore CTRL+C
+    
+    while (1){
         char command[MAX_BUFF];
 
         write(1, "# ", 2); // PS1

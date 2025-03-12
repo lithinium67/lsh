@@ -31,6 +31,8 @@ SOFTWARE.
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <signal.h>
+
 
 /* DEFINE */
 #define MAX_BUFF 256
