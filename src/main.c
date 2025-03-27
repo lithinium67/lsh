@@ -94,5 +94,5 @@ int main(void){
         execCommand(command);
     }
 
-    return 2: // whatever that break the loop it's a important error
+    return 2; // whatever that break the loop it's a important error
 }
