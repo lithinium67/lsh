@@ -1,26 +1,4 @@
-/*
-MIT License
-
-Copyright (c) 2025 lithinium67
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+/* Copyright (C) 2025 Lithinium <lithinium67@gmail.com> */
 
 #include <shell.h>
 
@@ -80,10 +58,30 @@ int main(void){
 
     signal(SIGINT, SIG_IGN); // ignore CTRL+C
     
+    // Main Loop
     while (1){
+
+        // Get user data
+        struct passwd *pw = getpwuid(getuid());
+        if (pw == NULL) perror("getpwuid");
+
+        char *user = pw->pw_name;
+
+        char dir[MAX_BUFF];
+        if (getcwd(dir, sizeof(dir)) == NULL) perror("getcwd");
+
+        // Making the Prompt
+        char prompt[strlen(user) + strlen(dir) + 3]; // 3 is for "@" & "# "
+
+        strcpy(prompt, user);
+        strcat(prompt, "@");
+        strcat(prompt, dir);
+        strcat(prompt, "# ");
+
+        // Real Shell
         char command[MAX_BUFF];
 
-        write(1, "# ", 2); // PS1
+        write(1, prompt, strlen(prompt));
 
         int readBytes = read(0, command, MAX_BUFF); // STDIN
         
@@ -96,4 +94,5 @@ int main(void){
         execCommand(command);
     }
 
+    return 2: // whatever that break the loop it's a important error
 }
