@@ -57,7 +57,17 @@ void execCommand(char* command){
 int main(void){
 
     signal(SIGINT, SIG_IGN); // ignore CTRL+C
+                            
+    FILE *fhostname = fopen("/etc/hostname", "r");
     
+    char hostname[MAX_BUFF];
+
+    fgets(hostname, sizeof(hostname), fhostname);    
+
+    hostname[strlen(hostname) - 1] = 0; // quit \n
+
+    fclose(fhostname);
+
     // Main Loop
     while (1){
 
@@ -72,9 +82,11 @@ int main(void){
 
         // Making the Prompt
         char prompt[strlen(user) + strlen(dir) + 3]; // 3 is for "@" & "# "
-
+        
         strcpy(prompt, user);
         strcat(prompt, "@");
+        strcat(prompt, hostname);
+        strcat(prompt, ":");
         strcat(prompt, dir);
         strcat(prompt, "# ");
 
@@ -94,5 +106,5 @@ int main(void){
         execCommand(command);
     }
 
-    return 2: // whatever that break the loop it's a important error
+    return 2; // whatever that break the loop it's a important error
 }
