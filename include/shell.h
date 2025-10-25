@@ -4,16 +4,15 @@
 #define SHELL_H
 
 /* INCLUDE */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <signal.h>
 #include <pwd.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h> // for exit()
+#include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 /* DEFINE */
 #define MAX_BUFF 256
 
-#endif // SHELL_H
-
+#endif  // SHELL_H
