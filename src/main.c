@@ -72,7 +72,24 @@ int main(void) {
         char dir[MAX_BUFF];
         if (getcwd(dir, sizeof(dir)) == NULL) perror("getcwd");
 
-        // Making the Prompt
+        size_t home_len = strlen(pw->pw_dir);
+        
+        if (strncmp(dir, pw->pw_dir, home_len) == 0) {
+            if (dir[home_len] == '/' || dir[home_len] == '\0') {
+                char buffer[MAX_BUFF];
+                
+                if (dir[home_len] == '\0') {
+                    strcpy(buffer, "~");
+                } else {
+                    strcpy(buffer, "~");
+                    strcat(buffer, dir + home_len);
+                }
+                
+                strcpy(dir, buffer);
+            }
+        }
+
+        // Making the prompt
         char prompt[strlen(user) + strlen(dir) + 3];  // 3 is for "@" & "# "
 
         strcpy(prompt, user);
