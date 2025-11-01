@@ -1,7 +1,5 @@
 CC = tcc
-CFLAGS = -I./include -Wall -Werror -pedantic $(CCFLAGS)
-#CCFLAGS = -Os -s -fno-asynchronous-unwind-tables -std=c99 # on GCC
-CCFLAGS = -s # on tcc
+CFLAGS = -I./include -Wall -Werror -pedantic -s
 SRC = $(wildcard src/*.c)
 OBJ = $(SRC:.c=.o)
 BDIR = build
