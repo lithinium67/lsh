@@ -73,18 +73,18 @@ int main(void) {
         if (getcwd(dir, sizeof(dir)) == NULL) perror("getcwd");
 
         size_t home_len = strlen(pw->pw_dir);
-        
+
         if (strncmp(dir, pw->pw_dir, home_len) == 0) {
             if (dir[home_len] == '/' || dir[home_len] == '\0') {
                 char buffer[MAX_BUFF];
-                
+
                 if (dir[home_len] == '\0') {
                     strcpy(buffer, "~");
                 } else {
                     strcpy(buffer, "~");
                     strcat(buffer, dir + home_len);
                 }
-                
+
                 strcpy(dir, buffer);
             }
         }
@@ -100,6 +100,8 @@ int main(void) {
         strcat(prompt, "# ");
 
         // Real Shell
+
+        /* Legacy
         char command[MAX_BUFF];
 
         write(1, prompt, strlen(prompt));
@@ -107,12 +109,19 @@ int main(void) {
         int readBytes = read(0, command, MAX_BUFF);  // STDIN
 
         command[readBytes - 1] = 0;
+        */
+
+        char* command = readline(prompt);
+
+        add_history(command);
 
         if (strcmp(command, "exit") == 0) {
             exit(0);
         }
 
         execCommand(command);
+
+        free(command);
     }
 
     return 2;  // whatever that break the loop it's a important error

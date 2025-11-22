@@ -1,5 +1,6 @@
 CC = tcc
 CFLAGS = -I./include -Wall -Werror -pedantic -s
+LIBS = -lreadline
 SRC = $(wildcard src/*.c)
 OBJ = $(SRC:.c=.o)
 BDIR = build
@@ -15,7 +16,7 @@ run: compile
 compile: $(BDIR) $(BDIR)/$(BNAME)
 
 $(BDIR)/$(BNAME): $(OBJ)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
