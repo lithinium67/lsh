@@ -4,6 +4,7 @@
 #define SHELL_H
 
 /* INCLUDE */
+#include <command.h>
 #include <pwd.h>
 #include <readline/history.h>
 #include <readline/readline.h>

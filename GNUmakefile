@@ -1,6 +1,7 @@
-CC = tcc
-CFLAGS = -I./include -Wall -Werror -pedantic -s
-LIBS = -lreadline
+CC = gcc
+#CFLAGS = -I./include -Wall -Werror -pedantic -std=c99 -s -O3 # release
+CFLAGS = -I./include -Wall -Werror -pedantic -std=c99 -g -O0 # debug
+LIBS = $(shell pkg-config --libs readline)
 SRC = $(wildcard src/*.c)
 OBJ = $(SRC:.c=.o)
 BDIR = build
